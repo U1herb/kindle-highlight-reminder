@@ -145,7 +145,7 @@ function normalizeBooks(data) {
       createdAt: String(book.createdAt || book["作成日時"] || ""),
       highlights: normalizeHighlights(book.highlights || book.notes || book.memo || book.content)
     }))
-    .filter((book) => book.highlights.length > 0);
+    .filter((book) => book.title.trim() && book.title !== "無題");
 }
 
 function normalizeTags(value) {
@@ -175,6 +175,10 @@ function chooseDailyBooks(force = false) {
   if (!force && savedKey === todayKey && isDailyBookSelection(state.today)) return state.today;
 
   const candidates = state.books.filter((book) => book.highlights.length > 0);
+  if (!candidates.length) {
+    localStorage.setItem(`${STORAGE_KEY}:today-key`, todayKey);
+    return [];
+  }
   const shuffledBooks = seededShuffle(candidates, force ? `${todayKey}:books:${Date.now()}` : `${todayKey}:books`);
   const selected = shuffledBooks.slice(0, 3).map((book) => {
     const highlights = seededShuffle(
@@ -285,7 +289,12 @@ function renderLibrary() {
       <div class="tag-list"></div>
     `;
     row.querySelector("h3").textContent = book.title;
-    row.querySelector(".book-meta").textContent = [book.author, `${book.highlights.length}件`].filter(Boolean).join(" / ");
+    row.querySelector(".book-meta").textContent = [
+      book.author,
+      book.highlights.length ? `${book.highlights.length}ハイライト` : "ハイライト未同期"
+    ]
+      .filter(Boolean)
+      .join(" / ");
     const tagList = row.querySelector(".tag-list");
     for (const tag of book.tags) {
       const chip = document.createElement("span");

@@ -1,5 +1,5 @@
-const CACHE_NAME = "kindle-highlight-reminder:v4";
-const ASSETS = ["./", "./index.html", "./styles.css", "./script.js?v=4", "./manifest.webmanifest", "./data/notion-highlights.demo.json"];
+const CACHE_NAME = "kindle-highlight-reminder:v5";
+const ASSETS = ["./", "./index.html", "./styles.css", "./script.js?v=5", "./manifest.webmanifest", "./data/notion-highlights.demo.json"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

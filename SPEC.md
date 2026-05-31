@@ -18,6 +18,8 @@ Kindle由来の読書メモをNotionデータベース `05_book` から取り込
 - Database URL: `https://www.notion.so/2c4f58338f6580eebb3ed8a07a28b43d`
 - Data source: `collection://fa1f5833-8f65-839b-bc45-076825675d6c`
 - Primary view: `https://www.notion.so/2c4f58338f6580eebb3ed8a07a28b43d?v=ad4f58338f658386bae10830985309be`
+- Full library view: `https://www.notion.so/2c4f58338f6580eebb3ed8a07a28b43d?v=476f58338f6583cbb49888ef3fd4d94f`
+- Confirmed full library size: 315 books
 
 ### Notion Properties
 
@@ -65,12 +67,13 @@ Kindle由来の読書メモをNotionデータベース `05_book` から取り込
 ### 1. ハイライト取り込み
 
 - `data/notion-highlights.json` から本とハイライトを読み込む。
+- ハイライトが空の本もライブラリ対象として保持する。
 - JSON内の `books[*].highlights` を通知候補として扱う。
 - 本のタイトル、著者、タグ、URL、作成日時をメタデータとして保持する。
 
 ### 2. 今日の3冊
 
-- ハイライトを持つ本から日付をseedにして3冊を選ぶ。
+- ハイライトを1件以上持つ本から日付をseedにして3冊を選ぶ。
 - 選ばれた各本の中から、同じ日付seedで3つのハイライトを選ぶ。
 - 同じ日は同じ `3冊 × 各3ハイライト` を表示する。
 - `今日の3冊を再作成` ボタンで当日の選出結果を手動再抽選できる。
@@ -79,8 +82,9 @@ Kindle由来の読書メモをNotionデータベース `05_book` から取り込
 
 ### 3. ライブラリ表示
 
-- 取り込んだ本の一覧を表示する。
+- `05_book` から取り込んだ全本の一覧を表示する。
 - 各本にハイライト件数とタグを表示する。
+- ハイライト未抽出の本には `ハイライト未同期` と表示する。
 - タイトル、著者、タグ、本文を対象に検索できる。
 
 ### 4. 通知
@@ -153,7 +157,7 @@ Service Workerで主要ファイルをキャッシュする。
 - `/`
 - `index.html`
 - `styles.css`
-- `script.js?v=4`
+- `script.js?v=5`
 - `manifest.webmanifest`
 - `data/notion-highlights.json`
 
