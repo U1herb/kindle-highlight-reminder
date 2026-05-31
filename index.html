@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1f513f" />
+    <title>Kindle Highlight Reminder</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Notion 05_book</p>
+        <h1>過去の知恵</h1>
+      </div>
+      <button id="notifyTestButton" class="icon-button" type="button" title="通知テスト" aria-label="通知テスト">
+        <span aria-hidden="true">!</span>
+      </button>
+    </header>
+
+    <main class="app-shell">
+      <section class="toolbar" aria-label="同期と設定">
+        <div class="field-group">
+          <label for="importFile">Notion MCP JSON</label>
+          <input id="importFile" type="file" accept="application/json,.json" />
+        </div>
+        <button id="syncBundledButton" type="button">MCP同期データを読み込む</button>
+        <button id="loadSampleButton" type="button">サンプルを読み込む</button>
+        <button id="exportButton" type="button">保存データを書き出し</button>
+      </section>
+
+      <section class="settings" aria-label="通知設定">
+        <div class="setting-line">
+          <label for="notifyTime">通知時刻</label>
+          <input id="notifyTime" type="time" value="08:00" />
+        </div>
+        <label class="checkbox-line">
+          <input id="notificationToggle" type="checkbox" />
+          <span>この端末で毎日通知する</span>
+        </label>
+      </section>
+
+      <section class="summary" aria-live="polite">
+        <div>
+          <span id="highlightCount">0</span>
+          <small>ハイライト</small>
+        </div>
+        <div>
+          <span id="bookCount">0</span>
+          <small>冊</small>
+        </div>
+        <div>
+          <span id="lastSync">未同期</span>
+          <small>同期</small>
+        </div>
+      </section>
+
+      <section class="today-section">
+        <div class="section-heading">
+          <h2>今日の3冊</h2>
+          <button id="reshuffleButton" type="button">引き直す</button>
+        </div>
+        <div id="todayList" class="highlight-list"></div>
+      </section>
+
+      <section class="library-section">
+        <div class="section-heading">
+          <h2>ライブラリ</h2>
+          <input id="searchInput" type="search" placeholder="本・著者・タグ・本文で検索" />
+        </div>
+        <div id="libraryList" class="library-list"></div>
+      </section>
+    </main>
+
+    <template id="highlightTemplate">
+      <article class="highlight-card">
+        <header>
+          <strong></strong>
+          <span></span>
+        </header>
+        <ol></ol>
+      </article>
+    </template>
+
+    <script src="./script.js?v=3" type="module"></script>
+  </body>
+</html>

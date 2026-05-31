@@ -1,0 +1,5 @@
+logs/
+data/notion-highlights.json
+.vercel/
+.DS_Store
+Thumbs.db
