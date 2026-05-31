@@ -171,6 +171,13 @@ input[type="search"] {
   margin-top: 24px;
 }
 
+.status-line {
+  min-height: 22px;
+  margin: -4px 0 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .section-heading {
   justify-content: space-between;
   margin-bottom: 12px;

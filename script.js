@@ -46,6 +46,7 @@ const elements = {
   bookCount: $("#bookCount"),
   lastSync: $("#lastSync"),
   todayList: $("#todayList"),
+  todayStatus: $("#todayStatus"),
   libraryList: $("#libraryList"),
   reshuffleButton: $("#reshuffleButton"),
   searchInput: $("#searchInput"),
@@ -90,9 +91,7 @@ function bindEvents() {
   elements.loadSampleButton.addEventListener("click", () => importData(sampleData));
   elements.exportButton.addEventListener("click", exportData);
   elements.reshuffleButton.addEventListener("click", () => {
-    state.today = chooseDailyBooks(true);
-    persist();
-    renderToday();
+    recreateToday();
   });
   elements.searchInput.addEventListener("input", renderLibrary);
   elements.notifyTime.addEventListener("change", () => {
@@ -240,6 +239,17 @@ function renderToday() {
   for (const book of state.today) {
     elements.todayList.append(renderDailyBook(book));
   }
+}
+
+function recreateToday() {
+  state.today = chooseDailyBooks(true);
+  persist();
+  renderToday();
+  const total = state.today.reduce((sum, book) => sum + book.highlights.length, 0);
+  elements.todayStatus.textContent = `${new Date().toLocaleTimeString("ja-JP", {
+    hour: "2-digit",
+    minute: "2-digit"
+  })} に再作成しました。${state.today.length}冊 / ${total}ハイライトを提示しています。`;
 }
 
 function renderDailyBook(book) {
